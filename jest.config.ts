@@ -1,18 +1,24 @@
-module.exports = {
-  roots: ["<rootDir>/tests"],
-  collectCoverageFrom: [
-    "<rootDir>/src/**/*.ts",
-    "<rootDir>/src/**/**/*.ts",
-    "!<rootDir>/src/main/**",
-    "!**/tests/**",
-  ],
-  coverageDirectory: "coverage",
-  testEnvironment: "node",
-  preset: "",
+import type { Config } from '@jest/types';
+
+const config: Config.InitialOptions = {
+  moduleFileExtensions: ['ts', 'tsx', 'js'],
+  testRegex: '(/__tests__/.*|(\\.|/)(test|spec))\\.(jsx?|js?|tsx?|ts?)$',
+  globals: {
+    NODE_ENV: 'test',
+  },
   transform: {
-    ".+\\.ts$": "ts-jest",
+    '.+\\.ts$': 'ts-jest',
   },
-  moduleNameMapper: {
-    "@/(.*)": "<rootDir>/src/$1",
-  },
+  collectCoverageFrom: ['<rootDir>/src/**/*.ts'],
+  coveragePathIgnorePatterns: [
+    '/node_modules/',
+    '/__tests__/',
+    '<rootDir>/configs/',
+    'jest.config.ts',
+    '.json',
+    '.snap',
+  ],
+  coverageReporters: ['json', 'lcov', 'text', 'text-summary'],
 };
+
+export default config;
